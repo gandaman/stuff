@@ -1,0 +1,55 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+   config.vm.box = "ubuntu-cloud-images-precise64"
+
+   # If above box does not exist locally, fetch it here:
+   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box" 
+
+   config.vm.define "host1" do |host1|
+      host1.vm.box = "ubuntu-cloud-images-precise64"
+      host1.vm.hostname = "netlab1"
+      host1.vm.network :private_network, ip: '10.11.12.13' 
+#      host1.vm.network :public_network, ip: '222.22.22.22' 
+   end
+   config.vm.define "host2" do |host2|
+      host2.vm.box = "ubuntu-cloud-images-precise64"
+      host2.vm.hostname = "netlab2"
+      host2.vm.network :private_network, ip: '10.11.12.14' 
+#      host2.vm.network :public_network, ip: '222.22.22.22' 
+   end
+   config.vm.define "host3" do |host3|
+      host3.vm.box = "ubuntu-cloud-images-precise64"
+      host3.vm.hostname = "netlab3"
+      host3.vm.network :private_network, ip: '10.11.12.15' 
+#      host3.vm.network :public_network, ip: '222.22.22.22' 
+   end
+   config.vm.define "host4" do |host4|
+      host4.vm.box = "ubuntu-cloud-images-precise64"
+      host4.vm.hostname = "netlab4"
+      host4.vm.network :private_network, ip: '10.11.12.16' 
+#      host4.vm.network :public_network, ip: '222.22.22.22' 
+   end
+
+   # Tell Vagrant to run this script inside the VM
+   config.vm.provision :shell, :path => "bootstrap.sh"
+
+   config.vm.provision :shell, inline:
+      #comment
+      'echo
+       echo Hello this is an inline script
+       echo '
+
+      # ----------------------------------------------
+      # If VM will run some network services e.g. web browser
+      # make a port forward so we can test them from the host:
+      # host:4567 -->  Virtual Machine port 80
+      # ----------------------------------------------
+      #config.vm.network :forwarded_port, host: 4567, guest: 80
+
+end
+
