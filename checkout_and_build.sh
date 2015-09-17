@@ -22,9 +22,7 @@ if [ "$missing" -ne 0 ] ; then
    die "Apparently missing $missing files"
 fi
 
-echo "PWD is $PWD"
 cd ..
-echo "PWD is $PWD"
 
 . ./init.sh
 
